@@ -2,6 +2,7 @@ package com.fse.pmo.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,23 +19,23 @@ public class PmoTask {
 	@Id
 	@Column(name="task_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer task_id;
+	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="parent_id")
 	private PmoParentTask parentTask;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="project_id")
-	private PmoParentTask project;
+	private PmoProject project;
 	
-	@Column(name="task_name")
-	private String task_name;
+	@Column(name="task")
+	private String task;
 	
-	@Column(name ="start_date")
+	@Column(name ="start_dt")
 	private Date startDate;
 	
-	@Column(name="end_date")
+	@Column(name="end_dt")
 	private Date endDate;
 	
 	@Column(name="priorty")
@@ -43,13 +44,8 @@ public class PmoTask {
 	@Column(name="status")
 	private Integer status;
 
-	
-	public Integer getTask_id() {
-		return task_id;
-	}
-
-	public void setTask_id(Integer task_id) {
-		this.task_id = task_id;
+	public Integer getId() {
+		return id;
 	}
 
 	public PmoParentTask getParentTask() {
@@ -60,20 +56,20 @@ public class PmoTask {
 		this.parentTask = parentTask;
 	}
 
-	public PmoParentTask getProject() {
+	public PmoProject getProject() {
 		return project;
 	}
 
-	public void setProject(PmoParentTask project) {
+	public void setProject(PmoProject project) {
 		this.project = project;
 	}
 
-	public String getTask_name() {
-		return task_name;
+	public String getTask() {
+		return task;
 	}
 
-	public void setTask_name(String task_name) {
-		this.task_name = task_name;
+	public void setTask(String task) {
+		this.task = task;
 	}
 
 	public Date getStartDate() {
@@ -107,6 +103,9 @@ public class PmoTask {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 }

@@ -28,18 +28,15 @@ public class PmoUser {
 	private String lastName;
 	
 	@Column(name="emp_id")
-	private String employee_Id;
+	private String employeeId;
 	
-	@OneToOne(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
-	@JsonIgnoreProperties(value = {"user"}, allowSetters = true)
+	@ManyToOne
 	@JoinColumn(name="project_id")
 	private PmoProject project;
 	
 	@ManyToOne
 	@JoinColumn(name="task_id")
-	private PmoTask task;
-
-	
+	private PmoTask task_id;
 
 	public Integer getUser_id() {
 		return user_id;
@@ -63,14 +60,14 @@ public class PmoUser {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}	
-
-	public String getEmployee_Id() {
-		return employee_Id;
 	}
 
-	public void setEmployee_Id(String employee_Id) {
-		this.employee_Id = employee_Id;
+	public String getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public PmoProject getProject() {
@@ -81,14 +78,11 @@ public class PmoUser {
 		this.project = project;
 	}
 
-	public PmoTask getTask() {
-		return task;
+	public PmoTask getTask_id() {
+		return task_id;
 	}
 
-	public void setTask(PmoTask task) {
-		this.task = task;
+	public void setTask_id(PmoTask task_id) {
+		this.task_id = task_id;
 	}
-	
-	
-
 }
