@@ -17,16 +17,19 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDaoImpl projectDao;
 	
 	@Autowired
-	private UserDaoImpl userDao;
+	private UserDaoImpl userDaoImpl;
 	
 	@Override
 	public Integer saveUpadteProject(PmoProject project) {
-		Integer saveOrUpadte = projectDao.saveUpadteProject(project) ;
-		//PmoUser updatedUser = new PmoUser() ;
-		//updatedUser = project.getUser();
-		//updatedUser.setProject(project);
-		//userDao.saveUpadteUser(updatedUser);
-		return saveOrUpadte ;
+		Integer result = projectDao.saveUpadteProject(project);
+		if( result > 0 && project.getUser() != null) {
+		PmoUser pmoUser = project.getUser().get(0);
+		pmoUser.setProjectData(project);
+		pmoUser.setManager_check(1);
+		userDaoImpl.saveUpadteUser(pmoUser);
+		}
+		
+		return result;
 	}
 
 	@Override

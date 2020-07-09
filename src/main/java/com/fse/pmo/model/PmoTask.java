@@ -10,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="pmo_task")
@@ -18,15 +21,16 @@ public class PmoTask {
 
 	@Id
 	@Column(name="task_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE})
-	@JoinColumn(name="parent_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="parent_task_id")
 	private PmoParentTask parentTask;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="project_id")
+	@JsonIgnoreProperties(value = { "user", "task" }, allowSetters = true)
 	private PmoProject project;
 	
 	@Column(name="task")
@@ -38,14 +42,22 @@ public class PmoTask {
 	@Column(name="end_dt")
 	private Date endDate;
 	
-	@Column(name="priorty")
-	private Integer priorty;
+	@Column(name="priority")
+	private Integer priority;
 	
 	@Column(name="status")
 	private Integer status;
+	
+	@OneToOne(mappedBy = "pmoTask")
+	@JsonIgnoreProperties(value = { "pmoTask", "projectData" }, allowSetters = true)
+	private PmoUser pmoUser;
 
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public PmoParentTask getParentTask() {
@@ -88,12 +100,12 @@ public class PmoTask {
 		this.endDate = endDate;
 	}
 
-	public Integer getPriorty() {
-		return priorty;
+	public Integer getPriority() {
+		return priority;
 	}
 
-	public void setPriorty(Integer priorty) {
-		this.priorty = priorty;
+	public void setPriority(Integer priority) {
+		this.priority = priority;
 	}
 
 	public Integer getStatus() {
@@ -104,8 +116,12 @@ public class PmoTask {
 		this.status = status;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public PmoUser getPmoUser() {
+		return pmoUser;
+	}
+
+	public void setPmoUser(PmoUser pmoUser) {
+		this.pmoUser = pmoUser;
 	}
 
 }

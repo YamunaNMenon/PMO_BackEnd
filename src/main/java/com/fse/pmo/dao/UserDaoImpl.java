@@ -61,7 +61,7 @@ public class UserDaoImpl implements UserDao {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<PmoUser> createQuery = cb.createQuery(PmoUser.class);
 			Root<PmoUser> root = createQuery.from(PmoUser.class);
-			createQuery.orderBy(cb.desc(root.get("id")));
+			createQuery.orderBy(cb.desc(root.get("user_id")));
 			createQuery.select(root);
 			 
 			Query<PmoUser> query = session.createQuery(createQuery);

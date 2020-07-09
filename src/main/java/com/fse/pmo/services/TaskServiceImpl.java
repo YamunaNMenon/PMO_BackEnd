@@ -16,7 +16,8 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	public Integer saveUpadteTask(PmoTask task) {
-		return taskDaoImpl.saveUpadteTask(task);
+		Integer result = taskDaoImpl.saveUpadteTask(task);
+			return result;
 	}
 
 	@Override

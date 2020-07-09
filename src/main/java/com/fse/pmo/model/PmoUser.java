@@ -1,5 +1,6 @@
 package com.fse.pmo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class PmoUser {
 	
 	@Id
 	@Column(name="user_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer user_id;
 	
 	@Column(name="firstname")
@@ -30,13 +31,18 @@ public class PmoUser {
 	@Column(name="emp_id")
 	private String employeeId;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="project_id")
-	private PmoProject project;
+	@JsonIgnoreProperties(value = { "user", "task" }, allowSetters = true)
+	private PmoProject projectData;
 	
-	@ManyToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="task_id")
-	private PmoTask task_id;
+	@JsonIgnoreProperties(value = { "pmoUser", "project" }, allowSetters = true)
+	private PmoTask pmoTask;
+	
+	@Column(name="manager_check")
+	private Integer manager_check;
 
 	public Integer getUser_id() {
 		return user_id;
@@ -70,19 +76,27 @@ public class PmoUser {
 		this.employeeId = employeeId;
 	}
 
-	public PmoProject getProject() {
-		return project;
+	public PmoProject getProjectData() {
+		return projectData;
 	}
 
-	public void setProject(PmoProject project) {
-		this.project = project;
+	public void setProjectData(PmoProject projectData) {
+		this.projectData = projectData;
 	}
 
-	public PmoTask getTask_id() {
-		return task_id;
+	public PmoTask getPmoTask() {
+		return pmoTask;
 	}
 
-	public void setTask_id(PmoTask task_id) {
-		this.task_id = task_id;
+	public void setPmoTask(PmoTask pmoTask) {
+		this.pmoTask = pmoTask;
+	}
+
+	public Integer getManager_check() {
+		return manager_check;
+	}
+
+	public void setManager_check(Integer manager_check) {
+		this.manager_check = manager_check;
 	}
 }
